@@ -5,13 +5,13 @@ import torch.nn.functional as F
 
 class AttributeNetwork(nn.Module):
     
-    def __init__(self, input_size, hidden1_size, hidden2_size, output_size):
+    def __init__(self, input_size, hidden1_size, hidden2_size):
         super(AttributeNetwork, self).__init__()
         self.fc1 = nn.Linear(input_size, hidden1_size)   #FC1 network
         #self.dropout=nn.Dropout(0.5)
         self.fc2 = nn.Linear(hidden1_size, hidden2_size)  #FC2 network
         #nn.Dropout(0.5)
-        self.fc3 = nn.Linear(hidden2_size, output_size)   #FC3 network
+        
         #self.dropout=nn.Dropout(0.5)
         
 
@@ -21,7 +21,53 @@ class AttributeNetwork(nn.Module):
        # x = F.dropout(x)
         x = F.sigmoid(self.fc2(x))   #sigmoid tanh
         
-        x = F.sigmoid(self.fc3(x))
+        return x
+
+class AttributeNetwork2(nn.Module):
+    
+    def __init__(self, input_size, hidden1_size, hidden2_size, output_size):
+        super(AttributeNetwork2, self).__init__()
+        self.fc1 = nn.Linear(input_size, hidden1_size)   #FC1 network
+        #self.dropout=nn.Dropout(0.5)
+        self.fc2 = nn.Linear(hidden1_size, hidden2_size)  #FC2 network
+        self.fc3 = nn.Linear(hidden2_size, output_size)  #FC2 network
+        #nn.Dropout(0.5)
+        
+        #self.dropout=nn.Dropout(0.5)
+        
+
+    def forward(self, x):
+
+        x = F.relu(self.fc1(x))      #activate
+       # x = F.dropout(x)
+        x = F.sigmoid(self.fc2(x))   #sigmoid tanh
+        
+        x = F.sigmoid(self.fc3(x))   #sigmoid tanh
+        return x
+
+class AttributeNetwork3(nn.Module):
+    
+    def __init__(self, input_size, hidden1_size, hidden2_size, hidden3_size, output_size):
+        super(AttributeNetwork3, self).__init__()
+        self.fc1 = nn.Linear(input_size, hidden1_size)   #FC1 network
+        #self.dropout=nn.Dropout(0.5)
+        self.fc2 = nn.Linear(hidden1_size, hidden2_size)  #FC2 network
+        self.fc3 = nn.Linear(hidden2_size, hidden3_size)  #FC2 network
+        self.fc4 = nn.Linear(hidden3_size, output_size)  #FC2 network
+        #nn.Dropout(0.5)
+        
+        #self.dropout=nn.Dropout(0.5)
+        
+
+    def forward(self, x):
+
+        x = F.relu(self.fc1(x))      #activate
+       # x = F.dropout(x)
+        x = F.sigmoid(self.fc2(x))   #sigmoid tanh
+        
+        x = F.sigmoid(self.fc3(x))   #sigmoid tanh
+        
+        x = F.sigmoid(self.fc4(x))   #sigmoid tanh
         return x
 
 class TripletNetwork(nn.Module):
